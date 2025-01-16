@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 87.0, 1372.0, 779.0 ],
+		"rect" : [ 42.0, 87.0, 1372.0, 779.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 1,
 		"default_fontsize" : 12.0,
@@ -59,7 +59,7 @@
 					"numinlets" : 7,
 					"numoutlets" : 2,
 					"outlettype" : [ "int", "" ],
-					"patching_rect" : [ 551.5, 59.0, 82.0, 22.0 ],
+					"patching_rect" : [ 543.0, 88.0, 82.0, 22.0 ],
 					"text" : "midiformat"
 				}
 
@@ -82,7 +82,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ -2349.0, -395.0, 740.0, 779.0 ],
+						"rect" : [ 134.0, 87.0, 740.0, 779.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -648,8 +648,8 @@
 									"numinlets" : 1,
 									"numoutlets" : 3,
 									"outlettype" : [ "float", "float", "" ],
-									"patching_rect" : [ 398.0, 195.0, 220.0, 23.0 ],
-									"text" : "fzero~ @freqmin 27 @freqmax 4186"
+									"patching_rect" : [ 398.0, 195.0, 212.0, 23.0 ],
+									"text" : "fzero~ @freqmin 27 @freqmax 380"
 								}
 
 							}
