@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -3743.0, -432.0, 1858.0, 1130.0 ],
+		"rect" : [ 34.0, 87.0, 449.0, 351.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -40,17 +40,6 @@
 		"assistshowspatchername" : 0,
 		"boxes" : [ 			{
 				"box" : 				{
-					"id" : "obj-7",
-					"maxclass" : "comment",
-					"numinlets" : 1,
-					"numoutlets" : 0,
-					"patching_rect" : [ 576.0, 359.0, 84.0, 20.0 ],
-					"text" : "record #3"
-				}
-
-			}
-, 			{
-				"box" : 				{
 					"id" : "obj-32",
 					"maxclass" : "newobj",
 					"numinlets" : 3,
@@ -67,7 +56,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ -2550.0, -326.0, 1397.0, 1317.0 ],
+						"rect" : [ 34.0, 87.0, 670.0, 355.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -417,15 +406,16 @@
 									"fontsize" : 36.0,
 									"gradient" : 1,
 									"id" : "obj-184",
+									"linecount" : 2,
 									"maxclass" : "message",
 									"numinlets" : 2,
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
-									"patching_rect" : [ 1419.0, 396.5, 116.0, 49.0 ],
+									"patching_rect" : [ 1419.0, 396.5, 116.0, 89.0 ],
 									"presentation" : 1,
 									"presentation_rect" : [ 269.0, 87.0, 218.0, 49.0 ],
 									"style" : "rnbodefault",
-									"text" : "STOP",
+									"text" : "STNADBY",
 									"textjustification" : 1
 								}
 
@@ -514,7 +504,7 @@
 									"presentation" : 1,
 									"presentation_rect" : [ 24.5, 188.0, 132.0, 49.0 ],
 									"style" : "rnbodefault",
-									"text" : "ON",
+									"text" : "OFF",
 									"textjustification" : 1
 								}
 
@@ -4715,7 +4705,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 598.0, 468.0, 235.0, 22.0 ],
+					"patching_rect" : [ 36.0, 180.0, 235.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -5698,7 +5688,7 @@
  ]
 					}
 ,
-					"patching_rect" : [ 430.0, 205.0, 87.0, 22.0 ],
+					"patching_rect" : [ 36.0, 115.0, 87.0, 22.0 ],
 					"saved_object_attributes" : 					{
 						"description" : "",
 						"digest" : "",
@@ -5728,7 +5718,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ -2555.0, -425.0, 1100.0, 1331.0 ],
+						"rect" : [ 34.0, 87.0, 1100.0, 779.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -6520,7 +6510,7 @@
 		"lines" : [ 			{
 				"patchline" : 				{
 					"destination" : [ "obj-32", 2 ],
-					"midpoints" : [ 507.5, 426.5, 823.5, 426.5 ],
+					"midpoints" : [ 113.5, 158.0, 261.5, 158.0 ],
 					"source" : [ "obj-9", 4 ]
 				}
 
