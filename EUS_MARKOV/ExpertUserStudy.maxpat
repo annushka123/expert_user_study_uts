@@ -5718,7 +5718,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 34.0, 87.0, 1100.0, 779.0 ],
+						"rect" : [ -1298.0, -453.0, 1100.0, 1331.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -5746,7 +5746,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-41",
@@ -5755,7 +5754,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "bang" ],
 									"parameter_enable" : 0,
-									"patching_rect" : [ 136.0, 1038.0, 24.0, 24.0 ]
+									"patching_rect" : [ 37.0, 1057.0, 24.0, 24.0 ]
 								}
 
 							}
@@ -5765,7 +5764,7 @@
 									"maxclass" : "newobj",
 									"numinlets" : 1,
 									"numoutlets" : 0,
-									"patching_rect" : [ 136.0, 1092.0, 77.0, 22.0 ],
+									"patching_rect" : [ 37.0, 1106.0, 77.0, 22.0 ],
 									"text" : "s Markov_on"
 								}
 
@@ -5934,18 +5933,6 @@
 									"outlettype" : [ "int" ],
 									"parameter_enable" : 0,
 									"patching_rect" : [ 89.0, 924.0, 24.0, 24.0 ]
-								}
-
-							}
-, 							{
-								"box" : 								{
-									"id" : "obj-4",
-									"maxclass" : "newobj",
-									"numinlets" : 1,
-									"numoutlets" : 3,
-									"outlettype" : [ "", "", "" ],
-									"patching_rect" : [ 835.0, 1182.0, 86.0, 22.0 ],
-									"text" : "buttons"
 								}
 
 							}
@@ -6238,7 +6225,8 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-41", 0 ],
-									"order" : 0,
+									"midpoints" : [ 98.5, 972.5, 46.5, 972.5 ],
+									"order" : 1,
 									"source" : [ "obj-15", 0 ]
 								}
 
@@ -6246,7 +6234,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-7", 0 ],
-									"order" : 1,
+									"order" : 0,
 									"source" : [ "obj-15", 0 ]
 								}
 
@@ -6426,7 +6414,7 @@
 , 							{
 								"patchline" : 								{
 									"destination" : [ "obj-42", 0 ],
-									"midpoints" : [ 368.5, 1112.0, 222.5, 1112.0, 222.5, 456.0, 98.5, 456.0 ],
+									"midpoints" : [ 368.5, 1112.0, 217.5, 1112.0, 217.5, 456.0, 98.5, 456.0 ],
 									"source" : [ "obj-57", 0 ]
 								}
 
@@ -6547,13 +6535,6 @@
 		}
 ,
 		"dependency_cache" : [ 			{
-				"name" : "buttons.maxpat",
-				"bootpath" : "~/Desktop/expert_user_study_uts/EUS_MARKOV",
-				"patcherrelativepath" : ".",
-				"type" : "JSON",
-				"implicit" : 1
-			}
-, 			{
 				"name" : "demosound.maxpat",
 				"bootpath" : "C74:/help/msp",
 				"type" : "JSON",
