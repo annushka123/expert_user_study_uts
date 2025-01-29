@@ -1,121 +1,198 @@
 class Bee {
-  float headX, headY;
-  float headWidth; // Make headWidth dynamic
-  float wingMovementR = 4;
-  float wingMovementL = 4;
-  float wingSpeedR = 0.1;
-  float wingSpeedL = 0.1;
-  float size; // Size of the bee
-  float targetSize;  // Target size for easing transition
-  float easing = 0.05; // Easing factor (higher = faster transition)
+    PVector position;
+    PVector velocity;
+    PVector acceleration;
+    PVector target; // Target position (flower)
 
-  //// Constructor to set initial position and size
-  //Bee(float x, float y, float size) {
-  //    headX = x;
-  //    headY = y;
-  //    this.size = size;
-  //    headWidth = 10 * size; // Default head width scaled by size
-  //}
-  Bee(float x, float y, float initialSize) {
-    headX = x;
-    headY = y;
-    this.size = initialSize;
-    this.targetSize = initialSize; // Initial target size is same as size
-    headWidth = 10 * size;
-  }
-  
-      // Smoothly updates size using easing
-    void updateSize() {
-        size += (targetSize - size) * easing; // Easing equation
-        headWidth = 10 * size; // Update head width based on eased size
+    float maxSpeed = 3;   // Maximum speed
+    float maxForce = 0.1; // Maximum steering force
+    float size;           // Current size of the bee
+    float headWidth;      // Dynamic head width
+
+    // Adjusted wandering parameters for Swarm
+    float wanderRadius = 50;
+    float wanderDistance = 250;
+    float wanderStrength = 0.9;
+    float attractionStrength = 0.3;
+
+    // Wing properties
+    float wingMovementR = 4;
+    float wingMovementL = 4;
+    float wingSpeedR = 0.1;
+    float wingSpeedL = 0.1;
+    
+        boolean isFadingIn = false;  // Track fade state
+    boolean isFadingOut = false;
+
+    float alpha; // Opacity for fade effect
+
+    Bee(float x, float y, float initialSize) {
+        position = new PVector(x, y);
+        velocity = new PVector(random(-1, 1), random(-1, 1));
+        acceleration = new PVector(0, 0);
+        target = new PVector(x, y);
+        size = initialSize;
+        headWidth = 10 * size;
+        alpha = 0; // Start invisible (fades in)
     }
 
-    // Sets the new target size for easing
-    void setSize(float newSize) {
-        targetSize = newSize;
+    void fadeIn() {
+        isFadingIn = true;
+        isFadingOut = false;
+        alpha += 3;
+        alpha = constrain(alpha, 0, 255);
+        println("fadeIn called - alpha now: " + alpha + " isFadingIn: " + isFadingIn);
     }
 
-  void updateDimensions(int canvasWidth, int canvasHeight) {
-    // Update head width based on canvas size
-    headWidth = (canvasWidth / 15) * size; // Example ratio to make it responsive
-
-    // Update position to always be centered
-    headX = canvasWidth / 2;
-    headY = canvasHeight / 2;
-  }
-
-  //void display() {
-  //    drawHead(0, 0);
-  //    drawTentacles(0, 0);
-  //    drawBody(0, 0);
-  //    drawWings(0, 0);
-  //    //updatePosition();
-  //}
-
-  void display() {
-    updateSize();
-    pushMatrix();
-    translate(headX, headY); // Move to the bee's position
-    drawHead(0, 0);
-    drawTentacles(0, 0);
-    drawBody(0, 0);
-    drawWings(0, 0);
-    popMatrix();
-  }
-
-
-  void drawHead(float localX, float localY) {
-    strokeWeight(2);
-    stroke(0);
-    fill(0); // Yellow head
-    circle(localX, localY, headWidth);
-  }
-
-  void drawTentacles(float localX, float localY) {
-    noFill();
-    arc(localX + headWidth * 0.75, localY - headWidth / 2, headWidth, headWidth * 0.75, PI, PI + HALF_PI);
-    arc(localX - headWidth * 0.75, localY - headWidth / 2, headWidth, headWidth * 0.75, PI + HALF_PI, TWO_PI);
-  }
-
-  void drawBody(float localX, float localY) {
-    fill(230, 200, 10); // Body color
-    ellipse(localX, localY + headWidth * 1.8, headWidth * 1.7, headWidth * 2.7);
-    noFill();
-    strokeWeight(2);
-  }
-
-  void updatePosition(float x, float y) {
-    headX = x;
-    headY = y;
-  }
-
-  void drawWings(float localX, float localY) {
-    // Left wing
-    pushMatrix();
-    translate(localX - headWidth * 0.8, localY + headWidth * 1.1); // Adjusted to move wings slightly down
-
-    wingMovementR += wingSpeedR;
-    rotate(PI / wingMovementR);
-    if (wingMovementR < 3 || wingMovementR > 6) {
-      wingSpeedR *= -1;
+    void fadeOut() {
+        isFadingOut = true;
+        isFadingIn = false;
+        alpha -= 3;
+        alpha = constrain(alpha, 0, 255);
+        println("fadeOut called - alpha now: " + alpha + " isFadingOut: " + isFadingOut);
     }
 
-    fill(0);
-    ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
-    popMatrix();
-
-    // Right wing
-    pushMatrix();
-    translate(localX + headWidth * 0.8, localY + headWidth * 1.1); // Adjusted to move wings slightly down
-
-    wingMovementL += wingSpeedL;
-    rotate(-PI / wingMovementL);
-    if (wingMovementL < 3 || wingMovementL > 6) {
-      wingSpeedL *= -1;
+    boolean isInvisible() {
+        return alpha <= 0;
     }
 
-    fill(0);
-    ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
-    popMatrix();
-  }
+    void setTarget(float x, float y) {
+        target.set(x, y);
+    }
+
+    void seek(PVector target) {
+        PVector desired = PVector.sub(target, position);
+        float distance = desired.mag();
+        desired.normalize();
+
+        if (distance < 200) {
+            float m = map(distance, 0, 200, 0, maxSpeed * attractionStrength);
+            desired.mult(m);
+        } else {
+            desired.mult(maxSpeed);
+        }
+
+        PVector steer = PVector.sub(desired, velocity);
+        steer.limit(maxForce);
+        acceleration.add(steer);
+    }
+
+    void wander() {
+        PVector wanderCenter = velocity.copy();
+        wanderCenter.setMag(wanderDistance);
+
+        PVector wanderOffset = PVector.random2D();
+        wanderOffset.mult(wanderRadius);
+
+        PVector wanderTarget = PVector.add(wanderCenter, wanderOffset);
+        seek(PVector.add(position, wanderTarget));
+    }
+
+    void applyBehaviors() {
+        wander();
+        seek(target);
+    }
+
+    void update() {
+        velocity.add(acceleration);
+        velocity.limit(maxSpeed);
+        position.add(velocity);
+        acceleration.mult(0);
+
+        // Wing flapping motion
+        wingMovementR += wingSpeedR;
+        if (wingMovementR < 3 || wingMovementR > 6) {
+            wingSpeedR *= -1;
+        }
+        wingMovementL += wingSpeedL;
+        if (wingMovementL < 3 || wingMovementL > 6) {
+            wingSpeedL *= -1;
+        }
+    }
+
+    // Make sure your display method uses alpha correctly:
+    void display() {
+        update();
+        
+        float theta = velocity.heading() + PI / 2;
+
+        pushMatrix();
+        translate(position.x, position.y);
+        rotate(theta);
+        
+        fill(0, 0);
+        stroke(0, 0);
+        drawTentacles(0, 0);
+        
+
+        // Use alpha for all drawn elements
+        fill(0, alpha);
+        //stroke(0, 0);
+        drawHead(0, 0);
+        
+        // For the body
+        fill(230, 200, 10, 0);  // Yellow with alpha
+        stroke(0, 0);
+        drawBody(0, 0);
+        
+        // For the wings
+        fill(255, 0);  // White with alpha
+        stroke(0, 0);
+        drawWings(0, 0);
+
+        popMatrix();
+    }
+
+    void drawHead(float localX, float localY) {
+        strokeWeight(2);
+        //stroke(0, 0);
+        fill(0, 0, 0,255);
+        circle(localX, localY, headWidth);
+       
+    }
+
+    void drawTentacles(float localX, float localY) {
+        fill(0);
+        stroke(0);
+        strokeWeight(2);
+        arc(localX + headWidth * 0.75, localY - headWidth / 2, headWidth, headWidth * 0.75, PI, PI + HALF_PI);
+        arc(localX - headWidth * 0.75, localY - headWidth / 2, headWidth, headWidth * 0.75, PI + HALF_PI, TWO_PI);
+    }
+
+    void drawBody(float localX, float localY) {
+        fill(250, 250, 10, alpha);
+        ellipse(localX, localY + headWidth * 1.8, headWidth * 1.7, headWidth * 2.7);
+        noFill();
+        strokeWeight(2);
+    }
+
+    void drawWings(float localX, float localY) {
+        // Left wing
+        pushMatrix();
+        translate(localX - headWidth * 0.8, localY + headWidth * 1.1); // Adjusted to move wings slightly down
+        
+        wingMovementR += wingSpeedR;
+        rotate(PI / wingMovementR);
+        if (wingMovementR < 3 || wingMovementR > 6) {
+            wingSpeedR *= -1;
+        }
+
+        fill(0);
+        ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
+        popMatrix();
+
+        // Right wing  
+        pushMatrix();
+        translate(localX + headWidth * 0.8, localY + headWidth * 1.1); // Adjusted to move wings slightly down
+        
+        wingMovementL += wingSpeedL;
+        rotate(-PI / wingMovementL);
+        if (wingMovementL < 3 || wingMovementL > 6) {
+            wingSpeedL *= -1;
+        }
+
+        fill(0);
+        ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
+        popMatrix();
+    }
 }

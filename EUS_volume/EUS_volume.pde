@@ -9,7 +9,9 @@ OscP5 oscP5;
 NetAddress dest;
 NetAddress maxAddr;
 
-Bee bee;
+
+Flower flower;
+Swarm swarm;
 
 void setup() {
 
@@ -17,8 +19,8 @@ void setup() {
 
   oscP5 = new OscP5(this, 12000);
   dest = new NetAddress("127.0.0.1", 6450);
-
-  bee = new Bee(width/2, height/2, 1.0);
+  flower = new Flower(width/2, height/2);
+  swarm = new Swarm(); // Initialize swarm
   //bee.updateDimensions(width, height);
 }
 
@@ -26,7 +28,9 @@ void setup() {
 
 void draw() {
   background(255);
-  bee.display();
+  flower.display();
+    swarm.applyBehaviors();
+    swarm.display();
 
   
 }
