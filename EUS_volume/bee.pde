@@ -21,7 +21,7 @@ class Bee {
     float wingSpeedR = 0.1;
     float wingSpeedL = 0.1;
     
-        boolean isFadingIn = false;  // Track fade state
+    boolean isFadingIn = false;  // Track fade state
     boolean isFadingOut = false;
 
     float alpha; // Opacity for fade effect
@@ -39,7 +39,7 @@ class Bee {
     void fadeIn() {
         isFadingIn = true;
         isFadingOut = false;
-        alpha += 3;
+        alpha += 0.5;
         alpha = constrain(alpha, 0, 255);
         println("fadeIn called - alpha now: " + alpha + " isFadingIn: " + isFadingIn);
     }
@@ -47,7 +47,7 @@ class Bee {
     void fadeOut() {
         isFadingOut = true;
         isFadingIn = false;
-        alpha -= 3;
+        alpha -= 0.5;
         alpha = constrain(alpha, 0, 255);
         println("fadeOut called - alpha now: " + alpha + " isFadingOut: " + isFadingOut);
     }
@@ -91,6 +91,7 @@ class Bee {
     void applyBehaviors() {
         wander();
         seek(target);
+        update();
     }
 
     void update() {
@@ -112,7 +113,7 @@ class Bee {
 
     // Make sure your display method uses alpha correctly:
     void display() {
-        update();
+        //update();
         
         float theta = velocity.heading() + PI / 2;
 
@@ -120,8 +121,8 @@ class Bee {
         translate(position.x, position.y);
         rotate(theta);
         
-        fill(0, 0);
-        stroke(0, 0);
+        fill(0, alpha);
+        stroke(0, alpha);
         drawTentacles(0, 0);
         
 
@@ -131,13 +132,13 @@ class Bee {
         drawHead(0, 0);
         
         // For the body
-        fill(230, 200, 10, 0);  // Yellow with alpha
-        stroke(0, 0);
+        fill(230, 200, 10, alpha);  // Yellow with alpha
+        stroke(0, alpha);
         drawBody(0, 0);
         
         // For the wings
-        fill(255, 0);  // White with alpha
-        stroke(0, 0);
+        fill(0, alpha);  // White with alpha
+        stroke(0, alpha);
         drawWings(0, 0);
 
         popMatrix();
@@ -146,21 +147,21 @@ class Bee {
     void drawHead(float localX, float localY) {
         strokeWeight(2);
         //stroke(0, 0);
-        fill(0, 0, 0,255);
+        fill(0, 0, 0, 255);
         circle(localX, localY, headWidth);
        
     }
 
     void drawTentacles(float localX, float localY) {
-        fill(0);
-        stroke(0);
+        noFill();
+        stroke(0, 255);
         strokeWeight(2);
         arc(localX + headWidth * 0.75, localY - headWidth / 2, headWidth, headWidth * 0.75, PI, PI + HALF_PI);
         arc(localX - headWidth * 0.75, localY - headWidth / 2, headWidth, headWidth * 0.75, PI + HALF_PI, TWO_PI);
     }
 
     void drawBody(float localX, float localY) {
-        fill(250, 250, 10, alpha);
+        fill(250, 250, 10, 255);
         ellipse(localX, localY + headWidth * 1.8, headWidth * 1.7, headWidth * 2.7);
         noFill();
         strokeWeight(2);
@@ -177,7 +178,7 @@ class Bee {
             wingSpeedR *= -1;
         }
 
-        fill(0);
+        fill(0, 255);
         ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
         popMatrix();
 
@@ -191,7 +192,7 @@ class Bee {
             wingSpeedL *= -1;
         }
 
-        fill(0);
+        fill(0, 255);
         ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
         popMatrix();
     }

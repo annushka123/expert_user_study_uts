@@ -13,7 +13,7 @@ class Flower {
         this.petalCount = 8; // Fixed petal count for simplicity
         this.len = 100; // Petal length
         this.wid = 0.6; // Petal width scaling
-        this.rowCount = 5; // Number of rows of petals
+        this.rowCount = 7; // Number of rows of petals
     }
 
     void display() {
@@ -25,7 +25,7 @@ class Flower {
         pushMatrix();
         translate(x, y); // Draw the flower at its position
         for (int r = 0; r < rowCount; r++) {
-            fill(lerpColor(baseColor, color(255, 230, 150), r / (float) rowCount)); // Gradient effect
+            fill(lerpColor(baseColor, color(255, 130, 150), r / (float) rowCount)); // Gradient effect
             pushMatrix();
             for (float angle = 0; angle < 2 * PI; angle += deltaA) {
                 rotate(deltaA);
