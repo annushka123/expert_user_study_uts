@@ -16,7 +16,7 @@ void oscEvent(OscMessage theOscMessage) {
       //note density
       amp = theOscMessage.get(4).floatValue();
       //amplitude
-       nDense = theOscMessage.get(5).floatValue();
+      nDense = theOscMessage.get(5).floatValue();
       println("amp; ", amp);
       //pitches
       pitch = theOscMessage.get(6).floatValue();
@@ -26,31 +26,11 @@ void oscEvent(OscMessage theOscMessage) {
       p10 = theOscMessage.get(9).floatValue();
 
 
-            //// More gradual mapping for bee count
-            //float normalizedAmp = constrain(amp, 1, 5);
-            //float mappedValue = map(normalizedAmp, 1, 5, 1, 10);  // Reduced range
-            //int targetBees = int(pow(mappedValue, 2));  // Square for nonlinear growth
-            
-            //println("Mapped to bee count: " + targetBees);
-            //swarm.updateSwarmSize(targetBees);
-            
-        //            // Ensure we always have at least 1 bee
-        //int numBees = int(pow(map(amp, 1, 5, 1, 2), 3) * 50); 
 
-        //println("OSC amp: " + amp + " | Target bee count: " + numBees);
-        //swarm.updateSwarmSize(numBees);
-        
-                    
-            // More stable mapping that's less sensitive to small changes
-            float normalizedAmp = constrain(amp, 1, 5);
-            // Round to nearest 0.5 to reduce jitter
-            normalizedAmp = round(normalizedAmp * 2) / 2.0;
-            float mappedValue = map(normalizedAmp, 1, 5, 1, 5);
-            int targetBees = int(pow(mappedValue, 2));
-            
-            swarm.updateSwarmSize(targetBees);
+      float mappedValue = map(amp, 1, 5, 1, 15);
+      int targetBees = int(pow(mappedValue, 2));
 
-
+      swarm.updateSwarmSize(targetBees);
     }
   }
 }

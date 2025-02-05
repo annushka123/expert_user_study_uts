@@ -21,10 +21,10 @@ class Bee {
     float wingSpeedR = 0.1;
     float wingSpeedL = 0.1;
     
-    boolean isFadingIn = false;  // Track fade state
-    boolean isFadingOut = false;
+    float opacity;
+    boolean fadingOut = false;
+    
 
-    float alpha; // Opacity for fade effect
 
     Bee(float x, float y, float initialSize) {
         position = new PVector(x, y);
@@ -33,28 +33,26 @@ class Bee {
         target = new PVector(x, y);
         size = initialSize;
         headWidth = 10 * size;
-        alpha = 0; // Start invisible (fades in)
-    }
+        opacity = 0;
 
+    }
+    
     void fadeIn() {
-        isFadingIn = true;
-        isFadingOut = false;
-        alpha += 0.5;
-        alpha = constrain(alpha, 0, 255);
-        println("fadeIn called - alpha now: " + alpha + " isFadingIn: " + isFadingIn);
+        if (opacity < 255) {
+            opacity += 2; // Gradually increase opacity
+            opacity = constrain(opacity, 0, 255);
+        }
     }
 
     void fadeOut() {
-        isFadingOut = true;
-        isFadingIn = false;
-        alpha -= 0.5;
-        alpha = constrain(alpha, 0, 255);
-        println("fadeOut called - alpha now: " + alpha + " isFadingOut: " + isFadingOut);
-    }
+        if (opacity > 0) {
+            opacity -= 2; // Gradually decrease opacity
+            opacity = constrain(opacity, 0, 255);
+        }
+    }   
 
-    boolean isInvisible() {
-        return alpha <= 0;
-    }
+
+
 
     void setTarget(float x, float y) {
         target.set(x, y);
@@ -109,61 +107,57 @@ class Bee {
         if (wingMovementL < 3 || wingMovementL > 6) {
             wingSpeedL *= -1;
         }
+        
+                if (fadingOut) {
+            fadeOut();
+        } else {
+            fadeIn();
+        }
+        
+        println("opacity is; " + opacity);
     }
 
     // Make sure your display method uses alpha correctly:
-    void display() {
-        //update();
-        
-        float theta = velocity.heading() + PI / 2;
+  void display() {
+    //update();
 
-        pushMatrix();
-        translate(position.x, position.y);
-        rotate(theta);
-        
-        fill(0, alpha);
-        stroke(0, alpha);
-        drawTentacles(0, 0);
-        
+    float theta = velocity.heading() + PI / 2;
 
-        // Use alpha for all drawn elements
-        fill(0, alpha);
-        //stroke(0, 0);
-        drawHead(0, 0);
-        
-        // For the body
-        fill(230, 200, 10, alpha);  // Yellow with alpha
-        stroke(0, alpha);
+    pushMatrix();
+    translate(position.x, position.y);
+    rotate(theta);
+    stroke(0, opacity);
+    drawTentacles(0, 0);
+
+
+
+        fill(250, 250, 10, opacity); // Yellow body
         drawBody(0, 0);
-        
-        // For the wings
-        fill(0, alpha);  // White with alpha
-        stroke(0, alpha);
+
+        fill(0, opacity); // Black head
+        drawHead(0, 0);
+
+        fill(0, opacity); // Transparent wings
         drawWings(0, 0);
 
-        popMatrix();
-    }
+    popMatrix();
+  }
 
     void drawHead(float localX, float localY) {
         strokeWeight(2);
-        //stroke(0, 0);
-        fill(0, 0, 0, 255);
         circle(localX, localY, headWidth);
        
     }
 
     void drawTentacles(float localX, float localY) {
         noFill();
-        stroke(0, 255);
         strokeWeight(2);
         arc(localX + headWidth * 0.75, localY - headWidth / 2, headWidth, headWidth * 0.75, PI, PI + HALF_PI);
         arc(localX - headWidth * 0.75, localY - headWidth / 2, headWidth, headWidth * 0.75, PI + HALF_PI, TWO_PI);
     }
 
     void drawBody(float localX, float localY) {
-        fill(250, 250, 10, 255);
         ellipse(localX, localY + headWidth * 1.8, headWidth * 1.7, headWidth * 2.7);
-        noFill();
         strokeWeight(2);
     }
 
@@ -178,7 +172,7 @@ class Bee {
             wingSpeedR *= -1;
         }
 
-        fill(0, 255);
+
         ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
         popMatrix();
 
@@ -192,7 +186,7 @@ class Bee {
             wingSpeedL *= -1;
         }
 
-        fill(0, 255);
+
         ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
         popMatrix();
     }
