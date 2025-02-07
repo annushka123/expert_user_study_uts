@@ -70,7 +70,7 @@
 					"numoutlets" : 2,
 					"outlettype" : [ "", "bang" ],
 					"parameter_enable" : 0,
-					"patching_rect" : [ 630.0, 461.0, 50.0, 22.0 ]
+					"patching_rect" : [ 653.599999999999909, 461.0, 50.0, 22.0 ]
 				}
 
 			}
@@ -162,7 +162,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 185.0, 87.0, 1022.0, 779.0 ],
+						"rect" : [ -3335.0, -339.0, 1024.0, 886.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -190,6 +190,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"format" : 6,
@@ -4041,7 +4042,7 @@
 , 			{
 				"patchline" : 				{
 					"destination" : [ "obj-75", 15 ],
-					"midpoints" : [ 639.5, 519.0, 684.323529411764753, 519.0 ],
+					"midpoints" : [ 663.099999999999909, 519.0, 684.323529411764753, 519.0 ],
 					"source" : [ "obj-88", 0 ]
 				}
 
@@ -4082,8 +4083,8 @@
 ,
 		"dependency_cache" : [ 			{
 				"name" : "buttons.maxpat",
-				"bootpath" : "~/Desktop/expert_user_study_uts/EUS_MAX_VOLUME",
-				"patcherrelativepath" : "../EUS_MAX_VOLUME",
+				"bootpath" : "~/Desktop/expert_user_study_uts/EUS_MAX_MASTER",
+				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
@@ -4095,8 +4096,8 @@
 			}
 , 			{
 				"name" : "density.maxpat",
-				"bootpath" : "~/Desktop/expert_user_study_uts/EUS_MAX_VOLUME",
-				"patcherrelativepath" : "../EUS_MAX_VOLUME",
+				"bootpath" : "~/Desktop/expert_user_study_uts/EUS_MAX_MASTER",
+				"patcherrelativepath" : ".",
 				"type" : "JSON",
 				"implicit" : 1
 			}
