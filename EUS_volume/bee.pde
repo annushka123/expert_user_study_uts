@@ -114,7 +114,7 @@ class Bee {
       fadeIn();
     }
 
-    println("opacity is; " + opacity);
+    
   }
 
   // Make sure your display method uses alpha correctly:

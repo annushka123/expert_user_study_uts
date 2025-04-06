@@ -1,5 +1,5 @@
 
-float bSpeed, bDir, bPos, bAccel, nDense, amp, pitch, p8, p9, p10;
+float bSpeed, bSpeed2, gestures, bowPos, pitch, volume, desnity, pressure, spare, spare_two;
 
 
 void oscEvent(OscMessage theOscMessage) {
@@ -8,22 +8,22 @@ void oscEvent(OscMessage theOscMessage) {
       //bow speed
       bSpeed = theOscMessage.get(0).floatValue();
       //bow position
-      bDir = theOscMessage.get(1).floatValue();
+      bSpeed2 = theOscMessage.get(1).floatValue();
       //starting gesture
-      bPos = theOscMessage.get(2).floatValue();
+      gestures = theOscMessage.get(2).floatValue();
       //bow acceleration
-      bAccel = theOscMessage.get(3).floatValue();
+      bowPos = theOscMessage.get(3).floatValue();
       //note density
-      amp = theOscMessage.get(4).floatValue();
+      pitch = theOscMessage.get(4).floatValue();
       //amplitude
-      pitch = theOscMessage.get(5).floatValue();
-      println("amp; ", amp);
+      volume = theOscMessage.get(5).floatValue();
+      println("volume; ", volume);
       //pitches
-      nDense = theOscMessage.get(6).floatValue();
+      desnity = theOscMessage.get(6).floatValue();
       //range
-      p8 = theOscMessage.get(7).floatValue();
-      p9 = theOscMessage.get(8).floatValue();
-      p10 = theOscMessage.get(9).floatValue();
+      pressure = theOscMessage.get(7).floatValue();
+      spare = theOscMessage.get(8).floatValue();
+      spare_two = theOscMessage.get(9).floatValue();
       
       
       swarm.updateSpeed(bSpeed);

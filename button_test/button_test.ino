@@ -1,11 +1,11 @@
 // Define pin numbers for the buttons
 const int BUTTON1_PIN = 2;  // Connect to Sig0
-//const int BUTTON2_PIN = 3;  // Connect to Sig1
+const int BUTTON2_PIN = 3;  // Connect to Sig1
 
 void setup() {
   // Configure button pins as inputs
   pinMode(BUTTON1_PIN, INPUT);
-  //pinMode(BUTTON2_PIN, INPUT);
+  pinMode(BUTTON2_PIN, INPUT);
   
   // Start serial communication
   Serial.begin(9600);

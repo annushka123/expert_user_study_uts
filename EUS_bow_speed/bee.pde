@@ -44,27 +44,52 @@ class Bee {
     //    target.set(x, y);
     //}
     
-void updateTargetSpeed(float bSpeed) {
-    // Map speed levels to different behavior intensities
-    if (bSpeed == 3.0) { 
-        wanderStrength = 2.0;  // Very erratic movement
-        attractionStrength = 0.8; // Weak attraction to the target
-        maxSpeed = 6.0;  // Bees move fast
-    } else if (bSpeed == 2.0) { 
-        wanderStrength = 1.2; // Moderate wandering
-        attractionStrength = 0.5; // Normal attraction
-        maxSpeed = 4.0;  // Normal movement speed
-    } else if (bSpeed == 1.0) { 
-        wanderStrength = 0.5; // Calm, slow wandering
-        attractionStrength = 1.2; // Strong attraction to the target
-        maxSpeed = 2.0;  // Moves gently
-    } else {
-        wanderStrength = 1.0; // Default behavior
-        attractionStrength = 0.6;
-        maxSpeed = 3.0;
-    }
-}
+//void updateTargetSpeed(float bSpeed) {
+//    // Map speed levels to different behavior intensities
+//    float newWanderSpeed, newAttractionStrength, newMaxSpeed;
+    
+//    if (bSpeed == 3.0) { 
+//        wanderStrength = 2.0;  // Very erratic movement
+//        attractionStrength = 1.5; // Weak attraction to the target
+//        maxSpeed = 6.0;  // Bees move fast
+//    } else if (bSpeed == 2.0) { 
+//        wanderStrength = 1.2; // Moderate wandering
+//        attractionStrength = 1.; // Normal attraction
+//        maxSpeed = 3.5;  // Normal movement speed
+//    } else if (bSpeed == 1.0) { 
+//        wanderStrength = 0.3; // Calm, slow wandering
+//        attractionStrength = 0.8; // Strong attraction to the target
+//        maxSpeed = 2;  // Moves gently
+//    } else {
+//        wanderStrength = 1.0; // Default behavior
+//        attractionStrength = 0.6;
+//        maxSpeed = 3.0;
+//    }
+//}
 
+void updateTargetSpeed(float smoothedSpeed) {
+    float newWanderStrength, newAttractionStrength, newMaxSpeed;
+
+    // Smoothly transition between speed states
+    if (smoothedSpeed >= 2.5) { // Closest to 3.0
+        newWanderStrength = 2.0;
+        newAttractionStrength = 1.5;
+        newMaxSpeed = 6.0;
+    } else if (smoothedSpeed >= 1.5) { // Closest to 2.0
+        newWanderStrength = 1.2;
+        newAttractionStrength = 1.0;
+        newMaxSpeed = 3.;
+    } else { // Closest to 1.0
+        newWanderStrength = 0.3;
+        newAttractionStrength = 0.8;
+        newMaxSpeed = 1.5;
+    }
+
+    // Gradually interpolate the changes over time (smoother transition)
+    wanderStrength = lerp(wanderStrength, newWanderStrength, 0.05);
+    attractionStrength = lerp(attractionStrength, newAttractionStrength, 0.05);
+    maxSpeed = lerp(maxSpeed, newMaxSpeed, 0.05);
+}
 
 
 
