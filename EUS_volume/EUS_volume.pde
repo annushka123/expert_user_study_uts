@@ -29,8 +29,8 @@ void setup() {
 void draw() {
   background(255);
   flower.display();
-    swarm.applyBehaviors();
-    swarm.display();
+  swarm.applyBehaviors();
+  swarm.display();
 
   
 }

@@ -23,7 +23,7 @@ class Bee {
   float wingSpeedR = 0.1;
   float wingSpeedL = 0.1;
   
-    float targetHeight;
+  float targetHeight;
   float heightLerp = 0.0;
   float lerpSpeed = 0.02;
 
