@@ -46,19 +46,19 @@ float getSmoothedSpeed() {
 }
 
     void updateSwarmSize(int numBees) {
-      for (Bee b : bees) {
+      
         int currentSize = bees.size();
         
         if(numBees > currentSize) {
          for (int i = currentSize; i < numBees; i++) {
-             bees.add(new Bee(width/2, height/2, 1.0));
+             bees.add(new Bee(random(width), random(height), 1.0));
           
           }
         }else if(numBees < currentSize) {
           for (int i = currentSize -1; i >= numBees; i--) {
             //bees.remove(i);
             bees.get(i).fadingOut = true; 
-          }
+          
         }
       }
     }

@@ -1,3 +1,6 @@
+import static processing.core.PApplet.*;
+
+
 class Bee {
   PVector position;
   PVector velocity;
@@ -10,10 +13,10 @@ class Bee {
   float headWidth;      // Dynamic head width
 
   // Adjusted wandering parameters for Swarm
-  float wanderRadius = 45;
-  float wanderDistance = 250;
-  float wanderStrength = 0.9;
-  float attractionStrength = 0.3;
+  float wanderRadius = 5;
+  float wanderDistance = 90;
+  float wanderStrength = 0.1;
+  float attractionStrength = 0.9;
 
   // Wing properties
   float wingMovementR = 4;
@@ -82,40 +85,65 @@ class Bee {
     if (flowerIndex >= 0 && flowerIndex < flowers.length) {
         target.set(flowers[flowerIndex].x, flowers[flowerIndex].y);
     }
-
-}
+  }
 
 void updateTargetSpeed(float smoothedSpeed) {
-    float newWanderStrength, newAttractionStrength, newMaxSpeed;
+  float targetSpeed = constrain(smoothedSpeed * 3.0, 0.5, 6.0);
+  maxSpeed = lerp(maxSpeed, targetSpeed, 0.1);
 
-    // Smoothly transition between speed states
-    if (smoothedSpeed >= 2.5) { // Closest to 3.0
-        newWanderStrength = 2.0;
-        newAttractionStrength = 1.5;
-        newMaxSpeed = 6.0;
-    } else if (smoothedSpeed >= 1.5) { // Closest to 2.0
-        newWanderStrength = 1.2;
-        newAttractionStrength = 1.0;
-        newMaxSpeed = 3.;
-    } else { // Closest to 1.0
-        newWanderStrength = 0.3;
-        newAttractionStrength = 0.8;
-        newMaxSpeed = 1.5;
-    }
-
-    // Gradually interpolate the changes over time (smoother transition)
-    wanderStrength = lerp(wanderStrength, newWanderStrength, 0.05);
-    attractionStrength = lerp(attractionStrength, newAttractionStrength, 0.05);
-    maxSpeed = lerp(maxSpeed, newMaxSpeed, 0.05);
+  // ✨ NEW: scale steering force with speed
+  maxForce = map(maxSpeed, 0.5, 6.0, 0.05, 0.3);  // feel free to tweak limits
 }
 
-  void seek(PVector target) {
+
+
+//void updateTargetSpeed(float smoothedSpeed) {
+//    float newWanderStrength, newAttractionStrength, newMaxSpeed;
+
+//    // Smoothly transition between speed states
+//    if (smoothedSpeed >= 2.5) {
+//        newWanderStrength = 2.0;
+//        newAttractionStrength = 1.5;
+//        newMaxSpeed = 6.0;
+//    } else if (smoothedSpeed >= 1.5) {
+//        newWanderStrength = 1.2;
+//        newAttractionStrength = 1.0;
+//        newMaxSpeed = 3.;
+//    } else {
+//        newWanderStrength = 0.3;
+//        newAttractionStrength = 0.8;
+//        newMaxSpeed = 1.5;
+//    }
+
+//    // Interpolate changes
+//    wanderStrength = lerp(wanderStrength, newWanderStrength, 0.05);
+//    attractionStrength = lerp(attractionStrength, newAttractionStrength, 0.05);
+//    maxSpeed = lerp(maxSpeed, newMaxSpeed, 0.05);
+//}
+
+
+
+  void wander() {
+    PVector wanderCenter = velocity.copy();
+    wanderCenter.setMag(wanderDistance);
+
+    PVector wanderOffset = PVector.random2D();
+    //wanderOffset.mult(wanderRadius);
+    float scaledRadius = map(maxSpeed, 0.5, 6.0, wanderRadius, 2);
+    wanderOffset.mult(scaledRadius);
+
+
+    PVector wanderTarget = PVector.add(wanderCenter, wanderOffset);
+    seek(PVector.add(position, wanderTarget));
+  }
+  
+    void seek(PVector target) {
     PVector desired = PVector.sub(target, position);
     float distance = desired.mag();
     desired.normalize();
 
     if (distance < 150) {
-      float m = map(distance, 0, 150, 0, maxSpeed * attractionStrength);
+      float m = map(distance, 0, 150, maxSpeed * attractionStrength, maxSpeed);
       desired.mult(m);
     } else {
       desired.mult(maxSpeed*1);
@@ -126,16 +154,6 @@ void updateTargetSpeed(float smoothedSpeed) {
     acceleration.add(steer);
   }
 
-  void wander() {
-    PVector wanderCenter = velocity.copy();
-    wanderCenter.setMag(wanderDistance);
-
-    PVector wanderOffset = PVector.random2D();
-    wanderOffset.mult(wanderRadius);
-
-    PVector wanderTarget = PVector.add(wanderCenter, wanderOffset);
-    seek(PVector.add(position, wanderTarget));
-  }
 
   void applyBehaviors() {
     wander();
@@ -147,10 +165,11 @@ void updateTargetSpeed(float smoothedSpeed) {
   }
 
   void update() {
-    velocity.add(acceleration);
-    velocity.limit(maxSpeed);
-    position.add(velocity);
-    acceleration.mult(0);
+  acceleration.limit(maxForce); // ✨ added
+  velocity.add(acceleration);
+  velocity.limit(maxSpeed);
+  position.add(velocity);
+  acceleration.mult(0);
 
     // Wing flapping motion
     wingMovementR += wingSpeedR;

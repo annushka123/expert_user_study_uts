@@ -1,6 +1,7 @@
 
 float bSpeed, bSpeed2, gestures, bowPos, pitch, volume, desnity, pressure, spare, slider;
-//int lastTarget = -1;
+int targetBees = 25;  // default
+
 
 
 void oscEvent(OscMessage theOscMessage) {
@@ -25,45 +26,29 @@ void oscEvent(OscMessage theOscMessage) {
       pressure = theOscMessage.get(7).floatValue();
       spare = theOscMessage.get(8).floatValue();
       slider = theOscMessage.get(9).floatValue();
+      
+      volume = theOscMessage.get(5).floatValue();
+      float mappedValue = map(volume, 1, 5, 1, 15);
+      targetBees = int(pow(mappedValue, 2));
 
-      // Cast slider to int for mode switching
-    int sliderMode = int(slider);
-    println(slider);
 
-    switch (sliderMode) {
-      case 1:
-        // Flower logic only
-        float mappedPressure = map(pressure, 1, 3, 0, 1);
-        int targetFlowers = int(pow(mappedPressure, 2) * 200);
-        flowers.updateFlowerCount(targetFlowers);
-        break;
+    
+    //int sliderMode = (int)slider;
+     
+    // println(slider);
 
-      case 2:
-        // Swarm logic only
-        swarm.updateHeights(bowPos, flower);
-        swarm.updateSpeed(bSpeed);
+    //switch (sliderMode) {
+    //  case 1:
+    //    // Flower logic only
 
-        float mappedValue = map(volume, 1, 5, 1, 15);
-        int targetBees = int(pow(mappedValue, 2));
-        swarm.updateSwarmSize(targetBees);
-        break;
+        
+        //swarm.updateHeights(bowPos, flower);
+        //swarm.updateSpeed(bSpeed);
+    //    break;
 
-      case 3:
-        // Both
-        // Swarm logic
-        swarm.updateHeights(bowPos, flower);
-        swarm.updateSpeed(bSpeed);
 
-        float mappedVal = map(volume, 1, 5, 1, 15);
-        int bees = int(pow(mappedVal, 2));
-        swarm.updateSwarmSize(bees);
 
-        // Flower logic
-        float mappedPress = map(pressure, 1, 3, 0, 1);
-        int flowersCount = int(pow(mappedPress, 2) * 200);
-        flowers.updateFlowerCount(flowersCount);
-        break;
-    }
+    //}
       //swarm.updateHeights(bowPos, flower);
       //println("bPos ;" + bowPos);
 
