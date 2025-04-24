@@ -26,29 +26,35 @@ void oscEvent(OscMessage theOscMessage) {
       pressure = theOscMessage.get(7).floatValue();
       spare = theOscMessage.get(8).floatValue();
       slider = theOscMessage.get(9).floatValue();
-      
+
       volume = theOscMessage.get(5).floatValue();
       float mappedValue = map(volume, 1, 5, 1, 15);
       targetBees = int(pow(mappedValue, 2));
 
 
-    
-    //int sliderMode = (int)slider;
-     
-    // println(slider);
-
-    //switch (sliderMode) {
-    //  case 1:
-    //    // Flower logic only
-
-        
-        //swarm.updateHeights(bowPos, flower);
-        //swarm.updateSpeed(bSpeed);
-    //    break;
+      volumeMemory.add(volume);
+      if (volumeMemory.size() > maxMemorySize) {
+        volumeMemory.remove(0);
+      }
 
 
 
-    //}
+      //int sliderMode = (int)slider;
+
+      // println(slider);
+
+      //switch (sliderMode) {
+      //  case 1:
+      //    // Flower logic only
+
+
+      //swarm.updateHeights(bowPos, flower);
+      //swarm.updateSpeed(bSpeed);
+      //    break;
+
+
+
+      //}
       //swarm.updateHeights(bowPos, flower);
       //println("bPos ;" + bowPos);
 

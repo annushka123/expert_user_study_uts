@@ -35,6 +35,8 @@ class Bee {
   //bow_speed behaviours
   PVector targetSpeed;
   PVector newTargetSpeed;
+  boolean erratic = false;
+
 
 
   Bee(float x, float y, float initialSize) {
@@ -153,10 +155,24 @@ void updateTargetSpeed(float smoothedSpeed) {
     steer.limit(maxForce);
     acceleration.add(steer);
   }
+  
+  void jitter() {
+  PVector noiseOffset = PVector.random2D();
+  noiseOffset.mult(random(0.5, 1.5));
+  acceleration.add(noiseOffset);
+}
+
 
 
   void applyBehaviors() {
-    wander();
+    //wander();
+    
+      if (erratic) {
+    jitter(); // ✨ add subtle unpredictability
+  } else {
+    wander(); // regular behavior
+  }
+
     seek(target);
     update();
     //may not need??

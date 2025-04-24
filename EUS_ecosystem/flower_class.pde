@@ -5,6 +5,12 @@ class Flower {
     float len; // Length of the petals
     float wid; // Width scaling of the petals
     int rowCount; // Number of petal rows
+    
+PVector position;
+PVector velocity;
+PVector home;
+boolean floating = false;
+
 
     Flower(float x, float y, float len, float wid, int rowCount) {
         this.x = x;
@@ -14,7 +20,36 @@ class Flower {
         this.len = len; // Petal length
         this.wid = wid; // Petal width scaling
         this.rowCount = rowCount; // Number of rows of petals
+        home = new PVector(x, y);
+       position = new PVector(x, y);
+velocity = PVector.random2D();
+velocity.mult(0.5);  // adjust speed as needed
+home = new PVector(x, y);
+
+
     }
+    
+void updateDrift(boolean isFloating) {
+  floating = isFloating;
+
+  if (floating) {
+    position.add(velocity);
+
+    // Bounce off walls
+    if (position.x < 0 || position.x > width) {
+      velocity.x *= -1;
+    }
+    if (position.y < 0 || position.y > height) {
+      velocity.y *= -1;
+    }
+
+  } else {
+    // Return to home smoothly
+    position.x = lerp(position.x, home.x, 0.05);
+    position.y = lerp(position.y, home.y, 0.05);
+  }
+}
+
 
     void display() {
         stroke(0);
@@ -23,11 +58,18 @@ class Flower {
         float petalLen = len;
 
         pushMatrix();
-        translate(x, y); // Draw the flower at its position
+        translate(position.x, position.y);
+
+
+        float driftPulse = 1.0 + sin(frameCount * 0.005 + home.x) * 0.02;
+
+scale(driftPulse);
+
+
         for (int r = 0; r < rowCount; r++) {
             for (int i = 0; i < petalCount; i++) {
               float angle = i * deltaA;
-              float oscillation = sin(frameCount * 0.02 + i) * 5;
+              float oscillation = sin(frameCount * 0.03 + i) * 5;
               
             fill(lerpColor(baseColor, color(255, 130, 150), r / (float) rowCount)); // Gradient effect
             pushMatrix();
@@ -40,70 +82,9 @@ class Flower {
         }
         popMatrix();
     }
-}
+    
 
 
-//class Flower {
-//  float x, y;
-//  int baseColor;
-//  int petalCount;
-//  float len;
-//  float wid;
-//  int rowCount;
-//  float[] swaySpeeds;
-//  float[] swayOffsets;
 
-//  Flower(float x, float y) {
-//    this.x = x;
-//    this.y = y;
-//    this.petalCount = 8;
-//    this.len = 120;
-//    this.wid = 0.7;
-//    this.rowCount = 8;
-
-//    // VIBRANT RGB COLORS (high contrast combos)
-//    int r = (int)random(180, 255);
-//    int g = (int)random(30, 180);
-//    int b = (int)random(150, 255);
-//    baseColor = color(r, g, b);
-
-//    swaySpeeds = new float[petalCount];
-//    swayOffsets = new float[petalCount];
-//    for (int i = 0; i < petalCount; i++) {
-//      swaySpeeds[i] = random(0.01, 0.02);
-//      swayOffsets[i] = random(TWO_PI);
-//    }
-//  }
-
-//  void display() {
-//    stroke(0, 120);
-//    strokeWeight(1);
-//    float angleStep = TWO_PI / petalCount;
-//    float petalLen = len;
-
-//    pushMatrix();
-//    translate(x, y);
-
-//    for (int r = 0; r < rowCount; r++) {
-//      fill(lerpColor(baseColor, color(255, 200, 220), r / (float) rowCount)); // gentle RGB fade
-
-//      for (int i = 0; i < petalCount; i++) {
-//        float baseAngle = i * angleStep;
-//        float sway = sin(frameCount * swaySpeeds[i] + swayOffsets[i]) * 0.15;
-
-//        float totalAngle = baseAngle + sway;
-
-//        pushMatrix();
-//        rotate(totalAngle);
-//        float px = petalLen * 0.75;
-//        float py = 0;
-//        ellipse(px, py, petalLen, petalLen * wid);
-//        popMatrix();
-//      }
-
-//      petalLen *= 0.8;
-//    }
-
-//    popMatrix();
-//  }
-//}
+    }
+    
