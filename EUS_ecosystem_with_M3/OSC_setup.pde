@@ -1,6 +1,7 @@
 
-float bSpeed, bSpeed2, gestures, bowPos, pitch, volume, desnity, pressure, spare, slider;
+float bSpeed, bSpeed2, gestures, bowPos, pitch, volume, density, pressure, spare, slider;
 int targetBees = 25;  // default
+
 
 
 
@@ -21,7 +22,7 @@ void oscEvent(OscMessage theOscMessage) {
       volume = theOscMessage.get(5).floatValue();
       //println("volume; ", volume);
       //pitches
-      desnity = theOscMessage.get(6).floatValue();
+      density = theOscMessage.get(6).floatValue();
       //range
       pressure = theOscMessage.get(7).floatValue();
       spare = theOscMessage.get(8).floatValue();
@@ -43,34 +44,37 @@ void oscEvent(OscMessage theOscMessage) {
         gestureMemory.remove(0);
       }
 
-      //int sliderMode = (int)slider;
+      densityMemory.add(density);
 
-      // println(slider);
+      bowPosMemory.add(bowPos);
 
-      //switch (sliderMode) {
-      //  case 1:
-      //    // Flower logic only
+      if (densityMemory.size() > maxMemorySize) densityMemory.remove(0);
 
-
-      //swarm.updateHeights(bowPos, flower);
-      //swarm.updateSpeed(bSpeed);
-      //    break;
+      if (bowPosMemory.size() > maxMemorySize) bowPosMemory.remove(0);
 
 
 
-      //}
-      //swarm.updateHeights(bowPos, flower);
-      //println("bPos ;" + bowPos);
-
-      //float mappedValue = map(volume, 1, 5, 1, 15);
-      //int targetBees = int(pow(mappedValue, 2));
-      //println(volume);
-      //swarm.updateSwarmSize(targetBees);
-
-      //// 🌼 Flower logic (new and improved)
-      //float mappedPressure = map(pressure, 1, 3, 0, 1);
-      //int targetFlowers = int(pow(mappedPressure, 2) * 200);
-      //flowers.updateFlowerCount(targetFlowers);
+      // Optional: handle button 4 kill here
     }
   }
+
+  if (theOscMessage.checkAddrPattern("/max/outputs/buttons") == true) {
+
+    int buttonID = theOscMessage.get(0).intValue();
+
+    println("button: " + buttonID);
+      switch (buttonID) {
+    case 5: // short press: manual mode
+      useAutonomousSlider = false;
+      println("✅ Manual Slider Mode (performer control)");
+      break;
+
+    case 6: // long press: autonomous mode
+      useAutonomousSlider = true;
+      println("✅ Autonomous Slider Mode (system decides)");
+      break;
+
+
+  }
+}
 }

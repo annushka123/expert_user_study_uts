@@ -66,20 +66,33 @@ class Swarm {
     erraticMode = e;
   }
 
-  void applyBehaviors() {
+  //void applyBehaviors() {
 
-    for (int i = bees.size() - 1; i >= 0; i--) {
-      Bee b = bees.get(i);
+  //  for (int i = bees.size() - 1; i >= 0; i--) {
+  //    Bee b = bees.get(i);
       
-      b.erratic = erraticMode;
+  //    b.erratic = erraticMode;
       
-      if (b.fadingOut && b.opacity <= 0) {
-        bees.remove(i); // Remove only after fading is complete
-      } else {
-        b.applyBehaviors();
-      }
+  //    if (b.fadingOut && b.opacity <= 0) {
+  //      bees.remove(i); // Remove only after fading is complete
+  //    } else {
+  //      b.applyBehaviors();
+  //    }
+  //  }
+  //}
+
+void applyBehaviors() {
+  for (int i = bees.size() - 1; i >= 0; i--) {
+    Bee b = bees.get(i);
+    b.erratic = erraticMode;
+    
+    if (b.fadingOut && b.opacity <= 0) {
+      bees.remove(i);
+    } else {
+      b.applyBehaviors(bees);  // ✅ Pass the bees list to each Bee
     }
   }
+}
 
 
   void display() {
@@ -88,4 +101,33 @@ class Swarm {
       b.display();
     }
   }
+  
+  void setMood(int mood, Flower[] flowerTargets) {
+  for (Bee b : bees) {
+    switch (mood) {
+      case 1:  // calm
+        b.setTarget(flowerTargets[1].home.x, flowerTargets[1].home.y);
+        b.setSeparation(0.5);
+        b.setCohesion(1.2);
+        b.setSpeed(1.0);
+        break;
+
+      case 2:  // focused
+        int randFlower = int(random(flowerTargets.length));
+        b.setTarget(flowerTargets[randFlower].home.x, flowerTargets[randFlower].home.y);
+        b.setSeparation(1.0);
+        b.setCohesion(0.8);
+        b.setSpeed(2.5);
+        break;
+
+      case 3:  // chaotic
+        b.setTarget(random(width), random(height));
+        b.setSeparation(2.0);
+        b.setCohesion(0.3);
+        b.setSpeed(5.0);
+        break;
+    }
+  }
+}
+
 }

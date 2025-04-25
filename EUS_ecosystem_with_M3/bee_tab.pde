@@ -1,4 +1,4 @@
-import static processing.core.PApplet.*;
+//import static processing.core.PApplet.*;
 
 
 class Bee {
@@ -37,6 +37,9 @@ class Bee {
   PVector newTargetSpeed;
   boolean erratic = false;
 
+float separationFactor = 1.0;
+float cohesionFactor = 1.0;
+
 
 
   Bee(float x, float y, float initialSize) {
@@ -73,6 +76,18 @@ class Bee {
     target.set(x, y);
   }
   
+  void setSpeed(float newSpeed) {
+  maxSpeed = lerp(maxSpeed, newSpeed, 0.05);
+}
+
+void setSeparation(float sep) {
+  separationFactor = sep;
+}
+
+void setCohesion(float coh) {
+  cohesionFactor = coh;
+}
+
   void updateTargetHeight(float bowPos, Flower[] flowers) {
     int flowerIndex = -1; // Default to no valid flower
 
@@ -97,31 +112,6 @@ void updateTargetSpeed(float smoothedSpeed) {
   maxForce = map(maxSpeed, 0.5, 6.0, 0.05, 0.3);  // feel free to tweak limits
 }
 
-
-
-//void updateTargetSpeed(float smoothedSpeed) {
-//    float newWanderStrength, newAttractionStrength, newMaxSpeed;
-
-//    // Smoothly transition between speed states
-//    if (smoothedSpeed >= 2.5) {
-//        newWanderStrength = 2.0;
-//        newAttractionStrength = 1.5;
-//        newMaxSpeed = 6.0;
-//    } else if (smoothedSpeed >= 1.5) {
-//        newWanderStrength = 1.2;
-//        newAttractionStrength = 1.0;
-//        newMaxSpeed = 3.;
-//    } else {
-//        newWanderStrength = 0.3;
-//        newAttractionStrength = 0.8;
-//        newMaxSpeed = 1.5;
-//    }
-
-//    // Interpolate changes
-//    wanderStrength = lerp(wanderStrength, newWanderStrength, 0.05);
-//    attractionStrength = lerp(attractionStrength, newAttractionStrength, 0.05);
-//    maxSpeed = lerp(maxSpeed, newMaxSpeed, 0.05);
-//}
 
 
 
@@ -164,21 +154,88 @@ void updateTargetSpeed(float smoothedSpeed) {
 
 
 
-  void applyBehaviors() {
-    //wander();
+  //void applyBehaviors() {
+  //  //wander();
     
-      if (erratic) {
-    jitter(); // ✨ add subtle unpredictability
+  //    if (erratic) {
+  //  jitter(); // ✨ add subtle unpredictability
+  //} else {
+  //  wander(); // regular behavior
+  //}
+
+  //  seek(target);
+  //  update();
+  //  //may not need??
+  //  position.x = constrain(position.x, 0, width);
+  //  position.y = constrain(position.y, 0, height);
+  //}
+
+void applyBehaviors(ArrayList<Bee> bees) {
+  if (erratic) {
+    jitter(); // subtle random force
   } else {
-    wander(); // regular behavior
+    wander(); // normal behavior
   }
 
-    seek(target);
-    update();
-    //may not need??
-    position.x = constrain(position.x, 0, width);
-    position.y = constrain(position.y, 0, height);
+  separation(bees);  // ✨ NEW
+  cohesion(bees);    // ✨ NEW
+  seek(target);      // keep aiming at main target
+  update();
+  
+  // Stay within screen
+  position.x = constrain(position.x, 0, width);
+  position.y = constrain(position.y, 0, height);
+}
+
+void separation(ArrayList<Bee> others) {
+  float desiredSeparation = 25 * separationFactor;  // 25 pixels base
+
+  PVector steer = new PVector(0, 0);
+  int count = 0;
+
+  for (Bee other : others) {
+    float d = PVector.dist(position, other.position);
+    if ((d > 0) && (d < desiredSeparation)) {
+      PVector diff = PVector.sub(position, other.position);
+      diff.normalize();
+      diff.div(d);  // weight by distance
+      steer.add(diff);
+      count++;
+    }
   }
+
+  if (count > 0) {
+    steer.div((float)count);
+  }
+
+  if (steer.mag() > 0) {
+    steer.setMag(maxSpeed);
+    steer.sub(velocity);
+    steer.limit(maxForce * separationFactor);
+    acceleration.add(steer);
+  }
+}
+
+void cohesion(ArrayList<Bee> others) {
+  float neighborDist = 50 * cohesionFactor;  // base 50 pixels
+
+  PVector sum = new PVector(0, 0);
+  int count = 0;
+  
+  for (Bee other : others) {
+    float d = PVector.dist(position, other.position);
+    if ((d > 0) && (d < neighborDist)) {
+      sum.add(other.position);
+      count++;
+    }
+  }
+
+  if (count > 0) {
+    sum.div((float)count);
+    seek(sum);
+  }
+}
+
 
   void update() {
   acceleration.limit(maxForce); // ✨ added
