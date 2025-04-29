@@ -28,6 +28,9 @@ void oscEvent(OscMessage theOscMessage) {
       spare = theOscMessage.get(8).floatValue();
       slider = theOscMessage.get(9).floatValue();
 
+
+      
+       
       volume = theOscMessage.get(5).floatValue();
       float mappedValue = map(volume, 1, 5, 1, 15);
       targetBees = int(pow(mappedValue, 2));
@@ -72,9 +75,20 @@ void oscEvent(OscMessage theOscMessage) {
     case 6: // long press: autonomous mode
       useAutonomousSlider = true;
       println("✅ Autonomous Slider Mode (system decides)");
+      sendAutonomousSliderToMax();
       break;
 
 
   }
 }
+}
+
+void sendAutonomousSliderToMax() {
+  if (toMax != null && oscP5 != null) {  // ✅ optional safe check
+    OscMessage msg = new OscMessage("/processing/autonomousSlider");
+    msg.add(autonomousSlider);  // 1, 2, or 3
+    oscP5.send(msg, toMax);
+  } else {
+    println("❌ Cannot send autonomousSlider - OSC or toMax not ready");
+  }
 }

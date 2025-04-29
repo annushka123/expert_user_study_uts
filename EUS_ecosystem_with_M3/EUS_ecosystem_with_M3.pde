@@ -90,6 +90,8 @@ tint(red(currentTint), green(currentTint), blue(currentTint), finalAlpha);
 image(grass, 0, 0, width, height);
 noTint();
 
+ performerSlider = (int)slider;
+ 
 if (useAutonomousSlider) {
   finalSlider = autonomousSlider;
 } else {
@@ -100,9 +102,9 @@ if (useAutonomousSlider) {
 
   //background(0);  // Reset every frame
 
-  int sliderMode = (int)slider;  // Ensure consistent int type
+  //int sliderMode = (int)slider;  // Ensure consistent int type
 
-  switch (sliderMode) {
+  switch (finalSlider) {
   case 1:
     drawMode1();  // 🌼 Only flowers
     break;
@@ -122,4 +124,16 @@ if (useAutonomousSlider) {
     text("Waiting for input...", width/2, height/2);
     break;
   }
+  
+int lastSentSlider = -1;  // put at top of your code
+
+// inside draw(), after updating autonomousSlider:
+  if (useAutonomousSlider) {
+    if (autonomousSlider != lastSentSlider) {
+      sendAutonomousSliderToMax();
+      lastSentSlider = autonomousSlider;
+    }
+  }
+
+
 }
