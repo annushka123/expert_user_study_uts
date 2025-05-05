@@ -7,6 +7,7 @@ void oscEvent(OscMessage theOscMessage) {
     if (theOscMessage.checkTypetag("ffffffffff")) {
       //bow speed
       bSpeed = theOscMessage.get(0).floatValue();
+      println("bow speed; ", bSpeed);
       //bow position
       bSpeed2 = theOscMessage.get(1).floatValue();
       //starting gesture
@@ -17,7 +18,7 @@ void oscEvent(OscMessage theOscMessage) {
       pitch = theOscMessage.get(4).floatValue();
       //amplitude
       volume = theOscMessage.get(5).floatValue();
-      println("volume; ", volume);
+      
       //pitches
       desnity = theOscMessage.get(6).floatValue();
       //range

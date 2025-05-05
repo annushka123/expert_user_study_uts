@@ -1,4 +1,6 @@
 
+float sep, coh;
+
 void drawMode1() {
 
 
@@ -25,7 +27,7 @@ void drawMode1() {
   }
 
   swarm.updateSwarmSize(targetBees);
-  swarm.updateHeights(bowPos, flower);
+  swarm.updateHeights(pitch, flower);
   swarm.updateSpeed(bSpeed);
   swarm.applyBehaviors();
   swarm.display();
@@ -59,7 +61,7 @@ void drawMode2() {
     flower[i].display();
   }
   swarm.updateSwarmSize(targetBees);
-  swarm.updateHeights(bowPos, flower);
+  swarm.updateHeights(pitch, flower);
   swarm.updateSpeed(bSpeed);
   swarm.applyBehaviors();
   swarm.display();
@@ -189,21 +191,29 @@ void drawMode3() {
       targetBG = color(30, 40, 70);
       targetTint = color(30, 220, 255);
       targetTintAlpha = 200;
+      sep = 0.5;   // tighter grouping
+      coh = 2.0;   // strong cohesion
       break;
     case 2:
       targetBG = color(80, 10, 30);
       targetTint = color(255, 150, 180);
       targetTintAlpha = 200;
+          sep = 1.0;   // balanced
+    coh = 1.2;
       break;
     case 3:
       targetBG = color(10, 0, 0);
       targetTint = color(180, 100, 255);
       targetTintAlpha = 180;
+          sep = 2.0;   // strong repulsion
+    coh = 0.3;   // weak attraction
       break;
     default:
       targetBG = color(20);
       targetTint = color(255);
       targetTintAlpha = 160;
+          sep = 1.0;
+    coh = 1.0;
   }
 
   currentBG = lerpColor(currentBG, targetBG, 0.05);
@@ -223,7 +233,9 @@ void drawMode3() {
     flower[i].updateDrift(true);
     flower[i].display();
   }
-
+  swarm.setSwarmSocial(sep, coh);
+    swarm.updateSwarmSize(targetBees);
+  swarm.updateHeights(pitch, flower);
   flowers.display(); 
   swarm.updateSpeed(beeSpeed);
   swarm.applyBehaviors();

@@ -11,6 +11,7 @@ int autonomousSlider = 1;
 int finalSlider = 1;  // this is what you'll switch on in draw()
 
 
+int lastSentSlider = -1; // 🧠 tracks the last sent slider value
 
 
 PImage grass;
@@ -52,7 +53,7 @@ boolean flowerSparkle = false;
 
 
 void setup() {
-  fullScreen(P2D);
+  fullScreen(P2D, 2);
   //size(600, 600);
   grass = loadImage("grass.png");
   //colorMode(HSB, 360, 100, 100);
@@ -92,14 +93,24 @@ noTint();
 
  performerSlider = (int)slider;
  
-if (useAutonomousSlider) {
-  finalSlider = autonomousSlider;
-} else {
-  finalSlider = performerSlider;
-}
+//if (useAutonomousSlider) {
+//  finalSlider = autonomousSlider;
+//} else {
+//  finalSlider = performerSlider;
+//}
 
 
-
+  if (useAutonomousSlider) {
+    updateAutonomousSlider();   // 🧠 updates autonomousSlider
+    finalSlider = autonomousSlider;
+    
+    if (autonomousSlider != lastSentSlider) {
+      sendAutonomousSliderToMax();
+      lastSentSlider = autonomousSlider; // 🧠 update memory
+    }
+  } else {
+    finalSlider = performerSlider;
+  }
   //background(0);  // Reset every frame
 
   //int sliderMode = (int)slider;  // Ensure consistent int type
@@ -125,15 +136,10 @@ if (useAutonomousSlider) {
     break;
   }
   
-int lastSentSlider = -1;  // put at top of your code
 
-// inside draw(), after updating autonomousSlider:
-  if (useAutonomousSlider) {
-    if (autonomousSlider != lastSentSlider) {
-      sendAutonomousSliderToMax();
-      lastSentSlider = autonomousSlider;
-    }
-  }
+
+
+
 
 
 }

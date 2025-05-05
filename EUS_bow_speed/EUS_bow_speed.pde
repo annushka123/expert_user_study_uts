@@ -21,5 +21,6 @@ void draw() {
   background(255);
   flower.display();
     swarm.applyBehaviors();
+    swarm.updateSpeed(bSpeed);
     swarm.display();
 }

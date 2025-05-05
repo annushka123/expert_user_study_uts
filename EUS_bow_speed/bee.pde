@@ -5,7 +5,7 @@ class Bee {
   PVector target;
 
 
-  float maxSpeed = 3;   // Maximum speed
+  float maxSpeed = 5;   // Maximum speed
   float maxForce = 0.1; // Maximum steering force
 
   float size;           // Current size of the bee
@@ -70,20 +70,26 @@ class Bee {
 void updateTargetSpeed(float smoothedSpeed) {
     float newWanderStrength, newAttractionStrength, newMaxSpeed;
 
-    // Smoothly transition between speed states
-    if (smoothedSpeed >= 2.5) { // Closest to 3.0
-        newWanderStrength = 2.0;
-        newAttractionStrength = 1.5;
-        newMaxSpeed = 6.0;
-    } else if (smoothedSpeed >= 1.5) { // Closest to 2.0
-        newWanderStrength = 1.2;
-        newAttractionStrength = 1.0;
-        newMaxSpeed = 3.;
-    } else { // Closest to 1.0
-        newWanderStrength = 0.3;
-        newAttractionStrength = 0.8;
-        newMaxSpeed = 1.5;
-    }
+if (smoothedSpeed >= 3.5) {
+    newWanderStrength = 6.0;
+    newAttractionStrength = 0.5;
+    newMaxSpeed = 8.0;
+    println("smoothedSpeed: " + smoothedSpeed);
+
+} else if (smoothedSpeed >= 1.5) {
+    newWanderStrength = 1.5;
+    newAttractionStrength = 1.0;
+    newMaxSpeed = 4.0;
+    println("smoothedSpeed: " + smoothedSpeed);
+
+} else {
+    newWanderStrength = 0.1;
+    newAttractionStrength = 2.0;
+    newMaxSpeed = 1.0;
+    println("smoothedSpeed: " + smoothedSpeed);
+
+}
+
 
     // Gradually interpolate the changes over time (smoother transition)
     wanderStrength = lerp(wanderStrength, newWanderStrength, 0.05);

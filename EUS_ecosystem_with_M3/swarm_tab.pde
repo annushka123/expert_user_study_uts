@@ -14,9 +14,9 @@ class Swarm {
     }
   }
 
-  void updateHeights(float bowPos, Flower[] flower) {
+  void updateHeights(float pitch, Flower[] flower) {
     for (Bee b : bees) {
-      b.updateTargetHeight(bowPos, flower);
+      b.updateTargetHeight(pitch, flower);
     }
   }
 
@@ -94,6 +94,12 @@ void applyBehaviors() {
   }
 }
 
+void setSwarmSocial(float separation, float cohesion) {
+  for (Bee b : bees) {
+    b.setSeparation(separation);
+    b.setCohesion(cohesion);
+  }
+}
 
   void display() {
     ArrayList<Bee> currentBees = new ArrayList<Bee>(bees);

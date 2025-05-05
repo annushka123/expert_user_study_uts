@@ -2,6 +2,9 @@
 
 
 class Bee {
+  float wingDirR = 1;
+float wingDirL = 1;
+
   PVector position;
   PVector velocity;
   PVector acceleration;
@@ -92,10 +95,10 @@ void setCohesion(float coh) {
     int flowerIndex = -1; // Default to no valid flower
 
     // Map pitch to the correct flower index
-    if (bowPos == 1.0) { flowerIndex = 3; }
-    else if (bowPos == 2.0 ) { flowerIndex = 2; }
-    else if (bowPos == 3.0 ) { flowerIndex = 1; }
-    else if (bowPos == 4.0 ) { flowerIndex = 0; }
+    if (pitch == 1.0) { flowerIndex = 3; }
+    else if (pitch == 2.0 ) { flowerIndex = 2; }
+    else if (pitch == 3.0 ) { flowerIndex = 1; }
+    else if (pitch == 4.0 ) { flowerIndex = 0; }
 
     // If a valid flower index was found, update the target position
     // If a valid flower index was found, move toward that flower
@@ -105,11 +108,14 @@ void setCohesion(float coh) {
   }
 
 void updateTargetSpeed(float smoothedSpeed) {
-  float targetSpeed = constrain(smoothedSpeed * 3.0, 0.5, 6.0);
-  maxSpeed = lerp(maxSpeed, targetSpeed, 0.1);
+  // Better expressivity: scale input down a bit
+  float targetSpeed = constrain(smoothedSpeed * 2.2, 0.1, 6.0);
 
-  // ✨ NEW: scale steering force with speed
-  maxForce = map(maxSpeed, 0.5, 6.0, 0.05, 0.3);  // feel free to tweak limits
+  // Smoother but responsive transition
+  maxSpeed = lerp(maxSpeed, targetSpeed, 0.25);
+
+  // Steering range adapted to match the speed better
+  maxForce = map(maxSpeed, 0.1, 6.0, 0.01, 0.35);
 }
 
 
@@ -188,7 +194,7 @@ void applyBehaviors(ArrayList<Bee> bees) {
 }
 
 void separation(ArrayList<Bee> others) {
-  float desiredSeparation = 25 * separationFactor;  // 25 pixels base
+  float desiredSeparation = 50 * separationFactor;  // 25 pixels base
 
   PVector steer = new PVector(0, 0);
   int count = 0;
@@ -307,32 +313,62 @@ void cohesion(ArrayList<Bee> others) {
   }
 
   void drawWings(float localX, float localY) {
+    //// Left wing
+    //pushMatrix();
+    //translate(localX - headWidth * 0.8, localY + headWidth * 1.1); // Adjusted to move wings slightly down
+    ////wingSpeedR = map(maxSpeed, 0.1, 6.0, 0.02, 0.3);
+
+    //wingMovementR += wingSpeedR;
+    //rotate(PI / wingMovementR);
+    //if (wingMovementR < 3 || wingMovementR > 6) {
+    //  wingSpeedR *= -1;
+    //}
+
+
+    //ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
+    //popMatrix();
+
+    //// Right wing
+    //pushMatrix();
+    //translate(localX + headWidth * 0.8, localY + headWidth * 1.1); // Adjusted to move wings slightly down
+    ////wingSpeedL = map(maxSpeed, 0.1, 6.0, 0.02, 0.3);
+    //wingMovementL += wingSpeedL;
+    //rotate(-PI / wingMovementL);
+    //if (wingMovementL < 3 || wingMovementL > 6) {
+    //  wingSpeedL *= -1;
+    //}
+
+
+    //ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
+    //popMatrix();
+    
     // Left wing
-    pushMatrix();
-    translate(localX - headWidth * 0.8, localY + headWidth * 1.1); // Adjusted to move wings slightly down
+pushMatrix();
+translate(localX - headWidth * 0.8, localY + headWidth * 1.1);
 
-    wingMovementR += wingSpeedR;
-    rotate(PI / wingMovementR);
-    if (wingMovementR < 3 || wingMovementR > 6) {
-      wingSpeedR *= -1;
-    }
+float mappedWingSpeed = map(maxSpeed, 0.1, 6.0, 0.02, 0.3);
+wingMovementR += mappedWingSpeed * wingDirR;
 
+rotate(PI / wingMovementR);
+if (wingMovementR < 3 || wingMovementR > 6) {
+  wingDirR *= -1;  // flip direction, not magnitude
+}
 
-    ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
-    popMatrix();
+ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
+popMatrix();
 
-    // Right wing
-    pushMatrix();
-    translate(localX + headWidth * 0.8, localY + headWidth * 1.1); // Adjusted to move wings slightly down
+// Right wing
+pushMatrix();
+translate(localX + headWidth * 0.8, localY + headWidth * 1.1);
 
-    wingMovementL += wingSpeedL;
-    rotate(-PI / wingMovementL);
-    if (wingMovementL < 3 || wingMovementL > 6) {
-      wingSpeedL *= -1;
-    }
+wingMovementL += mappedWingSpeed * wingDirL;
+rotate(-PI / wingMovementL);
+if (wingMovementL < 3 || wingMovementL > 6) {
+  wingDirL *= -1;
+}
 
+ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
+popMatrix();
 
-    ellipse(0, 0, headWidth * 1.35, headWidth * 2.35);
-    popMatrix();
   }
 }

@@ -49,7 +49,7 @@ void oscEvent(OscMessage theOscMessage) {
 
       densityMemory.add(density);
 
-      bowPosMemory.add(bowPos);
+      bowPosMemory.add(pitch);
 
       if (densityMemory.size() > maxMemorySize) densityMemory.remove(0);
 
