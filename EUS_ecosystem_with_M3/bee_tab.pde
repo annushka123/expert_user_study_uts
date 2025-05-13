@@ -95,10 +95,10 @@ void setCohesion(float coh) {
     int flowerIndex = -1; // Default to no valid flower
 
     // Map pitch to the correct flower index
-    if (pitch == 1.0) { flowerIndex = 3; }
-    else if (pitch == 2.0 ) { flowerIndex = 2; }
-    else if (pitch == 3.0 ) { flowerIndex = 1; }
-    else if (pitch == 4.0 ) { flowerIndex = 0; }
+    if (pitch == 1.0) { flowerIndex = 0; }
+    else if (pitch == 2.0 ) { flowerIndex = 1; }
+    else if (pitch == 3.0 ) { flowerIndex = 2; }
+    else if (pitch == 4.0 ) { flowerIndex = 3; }
 
     // If a valid flower index was found, update the target position
     // If a valid flower index was found, move toward that flower
