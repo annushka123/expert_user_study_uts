@@ -5,7 +5,7 @@ class Bee {
   PVector target;
 
 
-  float maxSpeed = 5;   // Maximum speed
+  float maxSpeed = 6;   // Maximum speed
   float maxForce = 0.1; // Maximum steering force
 
   float size;           // Current size of the bee

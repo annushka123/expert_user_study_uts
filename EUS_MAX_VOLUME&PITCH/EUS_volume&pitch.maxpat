@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ -3396.0, -6.0, 1372.0, 779.0 ],
+		"rect" : [ 34.0, 87.0, 1372.0, 779.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -41,13 +41,13 @@
 		"boxes" : [ 			{
 				"box" : 				{
 					"id" : "obj-10",
-					"linecount" : 17,
+					"linecount" : 6,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 284.0, 638.0, 55.0, 236.0 ],
-					"text" : "/wek/inputs 0.266658 0.73917 0. 0.595895 0.616833 0.588897 0.351311 0. 2.07 0. 0. 0.692521"
+					"patching_rect" : [ 284.0, 638.0, 59.0, 89.0 ],
+					"text" : "/wek/inputs 1. 1. 1. 1. 1. 1. 1. 0. 0.433531 0. 0. 1."
 				}
 
 			}
@@ -6870,7 +6870,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ -3026.0, 490.0, 1356.0, 763.0 ],
+						"rect" : [ 34.0, 103.0, 1356.0, 763.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -58637,7 +58637,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 181.099998403953578, 58.399970463207239, 39.0, 22.0 ],
-									"text" : "port g"
+									"text" : "port c"
 								}
 
 							}

@@ -29,7 +29,8 @@ void oscEvent(OscMessage theOscMessage) {
       slider = theOscMessage.get(9).floatValue();
 
 
-      
+      swarm.updateHeights(pitch, flower);
+      //println("bPos ;" + pitch);
        
       volume = theOscMessage.get(5).floatValue();
       float mappedValue = map(volume, 1, 5, 1, 15);

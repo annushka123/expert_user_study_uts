@@ -67,7 +67,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ -1886.0, 27.0, 1824.0, 958.0 ],
+						"rect" : [ 84.0, 87.0, 1372.0, 779.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -4481,6 +4481,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-76",
@@ -6656,7 +6657,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 178.0, 163.0, 577.0, 679.0 ],
+						"rect" : [ 567.0, 124.0, 833.0, 763.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -6684,7 +6685,6 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
-						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-2",
@@ -7049,7 +7049,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 182.0, 372.0, 39.0, 22.0 ],
-									"text" : "port c"
+									"text" : "port g"
 								}
 
 							}

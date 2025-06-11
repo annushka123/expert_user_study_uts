@@ -10,7 +10,7 @@
 		}
 ,
 		"classnamespace" : "box",
-		"rect" : [ 34.0, 96.0, 1372.0, 779.0 ],
+		"rect" : [ 61.0, 95.0, 1212.0, 679.0 ],
 		"bglocked" : 0,
 		"openinpresentation" : 0,
 		"default_fontsize" : 12.0,
@@ -148,15 +148,13 @@
 					"fontsize" : 36.0,
 					"gradient" : 1,
 					"id" : "obj-69",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 773.200000000000045, 942.0, 226.0, 89.0 ],
+					"patching_rect" : [ 773.200000000000045, 942.0, 226.0, 49.0 ],
 					"presentation" : 1,
-					"presentation_linecount" : 2,
-					"presentation_rect" : [ 978.0, 280.0, 190.0, 89.0 ],
+					"presentation_rect" : [ 978.0, 280.0, 190.0, 49.0 ],
 					"saved_attribute_attributes" : 					{
 						"bgfillcolor" : 						{
 							"expression" : "themecolor.live_prelisten"
@@ -164,7 +162,7 @@
 
 					}
 ,
-					"text" : "STOPPED PLAYING",
+					"text" : "PLAYING",
 					"textjustification" : 1
 				}
 
@@ -347,12 +345,11 @@
 					"fontsize" : 36.0,
 					"gradient" : 1,
 					"id" : "obj-56",
-					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 1153.0, 757.0, 229.0, 89.0 ],
+					"patching_rect" : [ 1153.0, 757.0, 229.0, 49.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 937.0, 173.0, 277.0, 49.0 ],
 					"saved_attribute_attributes" : 					{
@@ -362,7 +359,7 @@
 
 					}
 ,
-					"text" : "SYSTEM OFF",
+					"text" : "RECORDING",
 					"textcolor" : [ 0.968627450980392, 0.968627450980392, 0.968627450980392, 1.0 ],
 					"textjustification" : 1
 				}
@@ -1242,12 +1239,12 @@
 					"fontsize" : 36.0,
 					"gradient" : 1,
 					"id" : "obj-48",
-					"linecount" : 3,
+					"linecount" : 2,
 					"maxclass" : "message",
 					"numinlets" : 2,
 					"numoutlets" : 1,
 					"outlettype" : [ "" ],
-					"patching_rect" : [ 478.0, 745.0, 119.0, 129.0 ],
+					"patching_rect" : [ 478.0, 745.0, 133.0, 89.0 ],
 					"presentation" : 1,
 					"presentation_rect" : [ 102.0, 293.0, 336.0, 49.0 ],
 					"saved_attribute_attributes" : 					{
@@ -1257,7 +1254,7 @@
 
 					}
 ,
-					"text" : "Delay Preset 3",
+					"text" : "DELAY OFF",
 					"textjustification" : 1
 				}
 
@@ -1458,7 +1455,7 @@
 
 					}
 ,
-					"text" : "SYSTEM OFF",
+					"text" : "HARMONIZER ON",
 					"textjustification" : 1
 				}
 
@@ -3630,7 +3627,7 @@
 						}
 ,
 						"classnamespace" : "box",
-						"rect" : [ 134.0, 89.0, 1120.0, 777.0 ],
+						"rect" : [ 60.0, 89.0, 1120.0, 777.0 ],
 						"bglocked" : 0,
 						"openinpresentation" : 0,
 						"default_fontsize" : 12.0,
@@ -3658,6 +3655,7 @@
 						"style" : "",
 						"subpatcher_template" : "",
 						"assistshowspatchername" : 0,
+						"visible" : 1,
 						"boxes" : [ 							{
 								"box" : 								{
 									"id" : "obj-27",
@@ -3690,7 +3688,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 215.0, 619.0, 50.0, 22.0 ],
-									"text" : "379"
+									"text" : "366"
 								}
 
 							}
@@ -4290,7 +4288,7 @@
 									"numoutlets" : 1,
 									"outlettype" : [ "" ],
 									"patching_rect" : [ 188.0, 112.0, 39.0, 22.0 ],
-									"text" : "port c"
+									"text" : "port g"
 								}
 
 							}
